@@ -10,10 +10,13 @@ app.use(bodyParser.json());
 
 // Налаштування транспортера Nodemailer для відправлення листів
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.ukr.net',
+  port: 465,
+  secure: true,
   auth: {
-    user: 'your-email@gmail.com',
-    pass: 'your-email-password'
+    user: 'anarhist_666@ukr.net',
+    // pass: 'AxnNOVoOb1CBMKKt'
+    pass: 'qaz-666666'
   }
 });
 
@@ -26,7 +29,7 @@ app.post('/register', (req, res) => {
 
   // Відправлення листа підтвердження
   const mailOptions = {
-    from: 'your-email@gmail.com',
+    from: 'anarhist_666@ukr.net',
     to: email,
     subject: 'Підтвердження реєстрації',
     text: `Код підтвердження: ${confirmationCode}`
@@ -34,7 +37,7 @@ app.post('/register', (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error(error);
+      console.error("error", error);
       res.status(500).json({ error: 'Помилка відправлення листа підтвердження' });
     } else {
       console.log('Email sent: ' + info.response);
